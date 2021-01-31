@@ -1,0 +1,161 @@
+.page.new-page
+  .text-right
+    = estimate.created_at.strftime("%d/%m/%Y")
+  %h2
+    = estimate.user.name.titleize
+    (
+    %small= estimate.user.email
+    )
+  %h3 Datos básicos:
+  %b Edad:
+  = estimate.user.age
+  %small Años
+  %br/
+  %b Altura:
+  = estimate.user.height
+  %small m
+  %br/
+  %b Actividad fisica:
+  = estimate.activity
+  %br/
+  %b Grasa:
+  = estimate.body_fat.round(2)
+  %small %
+  %span (
+  = estimate.fat_weight.round(2)
+  %small kg
+  %span )
+  %br/
+  %b Peso magro:
+  = estimate.lean_weight.round(2)
+  %small kg
+  %br/
+  %b Peso total:
+  = estimate.weight.round(2)
+  %small kg
+  %h3 Plan:
+  %h4 Kcal (Recomendadas)
+  %b Gasto calorico:
+  = estimate.tdee.round(2)
+  %small kcal
+  %br/
+  %b Variación elegida:
+  = estimate.variation.round(2)
+  %small %
+  %br/
+  %b Calorias recomendadas:
+  = estimate.suggested.round(2)
+  %small kcal
+  %br/
+  %h4 Macronutrientes (Recomendados)
+  %b Grasas:
+  = estimate.gr_fats.round(2)
+  %small gr
+  %span (
+  = estimate.fats.round(2)
+  %small %
+  %span )
+  %br/
+  %b Carbos:
+  = estimate.gr_carbs.round(2)
+  %small gr
+  %span (
+  = estimate.carbs.round(2)
+  %small %
+  %span )
+  %br/
+  %b Protes:
+  = estimate.gr_proteins.round(2)
+  %small gr
+  %span (
+  = estimate.proteins.round(2)
+  %small %
+  %span )
+  %h3 Seleccionados:
+  %b Grasas:
+  = estimate.total_fats.round(2)
+  %small gr
+  %br/
+  %b Carbos:
+  = estimate.total_carbs.round(2)
+  %small gr
+  %br/
+  %b Protes:
+  = estimate.total_proteins.round(2)
+  %small gr
+  %br/
+  %b Total:
+  = estimate.total_kcal.round(2)
+  %small kcal
+
+  %h3
+    %br/
+    %b Crea un nuevo plan en:
+    https://poligrancolombiano.herokuapp.com/
+.new-page
+  %h3 Plan de Alimentación:
+  - estimate.meals.order(:hour).uniq.each do |meal|
+    -if meal.estimate_foods.count > 0
+      %br/
+      %table.table-striped
+        %thead
+          %tr.red-text
+            %th= meal.hour.strftime("%H:%M")
+            %th= meal.name
+          %tr
+            %th Cantidad
+            %th Intercambio
+            %th Protes
+            %th Grasas
+            %th Carbos
+        -meal.estimate_foods.each do |comida|
+          -if comida.estimate_id == estimate.id
+            %tbody
+              %tr
+                %td= comida.quantity
+                %td= comida.food_type.name
+                %td
+                  = comida.total_proteins.round(2)
+                  %small gr
+                %td
+                  = comida.total_fats.round(2)
+                  %small gr
+                %td
+                  = comida.total_carbs.round(2)
+                  %small gr
+.new-page
+  %h3 Lista de intercambios
+  %small Los alimentos listados a continuación equivalen a un intercambio en cada grupo de alimentos, y son pesados en crudo.
+  - estimate.food_types.uniq.each do |intercambio|
+    %br/
+    %br/
+    %h3=intercambio.name
+    %span
+      %b Kcal:
+      = intercambio.kcal.round(2)
+      %small Kcal
+    %span
+      %b Proteinas:
+      = intercambio.proteins.round(2)
+      %small gr
+    %span
+      %b Carbohidratos:
+      = intercambio.carbs.round(2)
+      %small gr
+    %span
+      %b Grasas:
+      = intercambio.fats.round(2)
+      %small gr
+    %br/
+    %table
+      %thead
+        %tr
+          %th Nombre
+          %th Cantidad (gr/ml)
+          %th Cantidad (casera)
+      %tbody
+        - intercambio.foods.each do |food|
+          %tr
+            %td= food.name
+            %td= food.quantity
+            %td= food.home_quantity

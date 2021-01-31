@@ -1,0 +1,30 @@
+#food-modal.modal.fade.food-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h3#myModalLabel Nueva Comida
+      = form_for @food, remote: true do |f|
+        .modal-body
+          - if @food.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@food.errors.count, "error")} prohibited this food from being saved:"
+              %ul
+                - @food.errors.full_messages.each do |message|
+                  %li= message
+          .form-group
+            = f.label :name, "Nombre:"
+            = f.text_field :name, class: "form-control"
+            = f.hidden_field :food_type_id, :value => params[:food]
+          .row
+            .col-xs-6
+              = f.label :quantity, "Cantidad:"
+              %small (gr/ml)
+              = f.number_field :quantity, class: "form-control", min: 0, step: 0.01
+            .col-xs-6
+              = f.label :home_quantity, "Cantidad:"
+              %small (casera)
+              = f.text_field :home_quantity, class: "form-control"
+        .modal-footer
+          %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal", class: "btn btn-danger", style: "margin-top: 15px;"} Cancelar
+          = f.submit 'Guardar', class: "btn btn-primary"

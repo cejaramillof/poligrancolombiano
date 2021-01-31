@@ -1,0 +1,81 @@
+.col-sm-8.col-sm-offset-2
+  %h3 Editar sus datos básicos:
+  .jumbotron
+    = form_for(@user, html: { method: :put }) do |f|
+      = render 'shared/error_messages', object: f.object
+      .row
+        .col-sm-6
+          %br/
+          = f.label :name, "Nombre:"
+          = f.text_field :name, autofocus: true, class: "form-control", required: true
+          %br/
+        .col-sm-6
+          %br/
+          = f.label :email, "Correo:"
+          = f.email_field :email, required: true, class: "form-control"
+      .row
+        .col-sm-6
+          %br/
+          = f.label :height, "Altura (talla):"
+          %em
+            (en metros)
+          = f.number_field :height, class: "form-control", min: "0", max: "3", step:"0.01", placeholder: "1.75", required: true
+          %br/
+        .col-sm-6
+          %br/
+          = f.label :birth_date, "Fecha de Nacimiento: "
+          = f.text_field :birth_date, class: "form-control", required: true, 'data-provide': 'datepicker', readonly: "true",  'data-date-format': 'dd/mm/yyyy'
+          %br/
+      .row
+        .col-sm-6
+          %br/
+          = f.label :sex, "Genero:"
+          .row
+            %br/
+            .col-xs-6
+              = f.radio_button :sex, "male"
+              = f.label :sex, "Hombre", :value => "male", class: "radio-inline" do
+                %i.fa.fa-male.fa-2x{:"aria-hidden" => "true"}
+            .col-xs-6
+              = f.radio_button :sex, "female"
+              = f.label :sex, "Mujer", :value => "female", class: "radio-inline" do
+                %i.fa.fa-female.fa-2x{:"aria-hidden" => "true"}
+        .col-sm-6
+          %br/
+          = f.label :approved, "Aprobado:"
+          = f.check_box :approved
+          %br/
+          = f.label :admin, "Administrador:"
+          = f.check_box :admin
+      .row
+        %br/
+        %br/
+        %label Número de comidas al día:
+        %table.table
+          %thead
+            %tr
+              %th Nombre
+              %th Hora
+              %th
+          %tbody.fields
+            = f.simple_fields_for :meals do |builder|
+              = render 'users/registrations/meal', f: builder
+      .text-center
+        = link_to_add_row('Agregar Comida', f, :meals, class: 'btn btn-primary')
+      .row
+        %br/
+        %br/
+        %label Cambio de contraseña:
+        %small (dejar en blanco si no quieres cambiarla)
+        .col-sm-6
+          %br/
+          = f.label :password, "Nueva Contraseña:"
+          = f.password_field :password, autocomplete: "off", class: "form-control"
+        .col-sm-6
+          %br/
+          = f.label :password_confirmation, "Confirmar nueva contraseña:"
+          = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+      %br/
+      .actions.text-right
+        = link_to "Cancelar", users_path, class: "btn btn-danger", style: "margin-top: 15px;"
+        = f.submit "Actualizar", class: "btn btn-success"

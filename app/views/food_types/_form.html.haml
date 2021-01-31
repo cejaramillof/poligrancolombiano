@@ -1,0 +1,30 @@
+= form_for @food_type do |f|
+  - if @food_type.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@food_type.errors.count, "error")} prohibited this food_type from being saved:"
+      %ul
+        - @food_type.errors.full_messages.each do |message|
+          %li= message
+
+  .col-sm-12
+    = f.label :name, "Nombre:"
+    = f.text_field :name, class: "form-control"
+  .col-sm-6
+    %br/
+    = f.label :kcal, "Kcal:"
+    = f.text_field :kcal, class: "form-control"
+  .col-sm-6
+    %br/
+    = f.label :proteins, "Proteinas: "
+    = f.text_field :proteins, class: "form-control"
+  .col-sm-6
+    %br/
+    = f.label :carbs, "Carbohidratos: "
+    = f.text_field :carbs, class: "form-control"
+  .col-sm-6
+    %br/
+    = f.label :fats, "Grasas: "
+    = f.text_field :fats, class: "form-control"
+    = f.hidden_field :food_group_id, :value => params[:food]
+  .actions.text-right
+    = f.submit 'Guardar', class: "btn btn-success"

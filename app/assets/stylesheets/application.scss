@@ -1,0 +1,209 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require toastr
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+@import "bootstrap-datepicker3";
+@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
+
+body {
+  background-color: #e3e7ed;
+  background-size: cover;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 1.2em;
+}
+
+#iosBlurBg {
+  resize: horizontal;
+  position: relative;
+  /*width: 100%;
+  height: 100vh;*/
+  border-top: 450px solid transparent;
+  border-left: 550px solid rgba(0,0,0,0.04);
+  border-bottom: 450px solid transparent;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+  /*box-shadow: 1px 1px 25px #999;*/
+}
+
+#whiteBg {
+  resize: horizontal;
+  position: absolute;
+  top: -410px;
+  right: 0;
+  border-top: 410px solid transparent;
+  border-left: 505px solid rgba(255,255,255,1);
+  border-bottom: 410px solid transparent;
+  border-right: 30px solid transparent;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 1));
+}
+
+#bottomEnter{
+  position: absolute;
+  top: 500px;
+  left: 150px;
+  z-index: -2;
+  border-top: 200px solid transparent;
+  border-right: 300px solid #15224a;
+  border-bottom: 150px solid transparent;
+  transform: rotate(-2deg);
+}
+
+#bottomBlurBg{
+  position: absolute;
+  top: 490px;
+  left: 110px;
+  z-index: -1;
+  border-top: 200px solid transparent;
+  border-right: 260px solid rgba(69,138,182,0.4);
+  border-bottom: 120px solid transparent;
+  transform: rotate(10deg);
+}
+
+.enterButton{
+  position: absolute;
+  top: 660px;
+  left: 330px;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+}
+
+.text-white{
+  color: #fff;
+}
+
+.enterText{
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.loginForm{
+  position: absolute;
+  top: 300px;
+  left: 70px;
+}
+
+.title{
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.title span{
+  font-weight: 800;
+  /*letter-spacing: 3px;*/
+}
+
+.title hr{
+  width: 150px;
+  border-width: 2px;
+  border-color: #67e2fb;
+  margin: 0;
+
+}
+
+hr.short{
+  width: 50px;
+  border-width: 2px;
+  border-color: #67e2fb;
+  float: left;
+  margin: 0;
+
+}
+
+
+/*= input focus effects css
+=========================== */
+:focus{outline: none;}
+
+.col-3{float: left; width: 100%; margin-top: 20px; margin-bottom: 0;}
+input{
+  margin-top: 15px;
+  font: 15px/24px "Open Sans", sans-serif;
+  color: #333;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+
+input::placeholder{
+  letter-spacing: 0;
+  font-size: 15px;
+  font-weight: 300;
+  padding-left: 15px;
+}
+
+.effect-2{border: 0; padding: 7px 0; border-bottom: 1px solid #ccc;}
+
+.forget button{
+  margin-top: 50px;
+  border-radius: 0;
+  color: #aaa;
+  margin-left: 50px;
+  font-weight: 700;
+}
+
+#error_explanation h2 { font-size: 15px; }
+
+
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.navbar-collapse.collapse {
+  display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+  float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: -15px !important;
+}
+
+.navbar-right {
+  float: right!important;
+}
+
+.form-control-inline {
+  min-width: 0;
+  width: auto;
+  display: inline;
+}
+
+.borderless td, .borderless th {
+  border: none!important;
+}
+
+@media (max-width: 480px) {
+  .enterButton{
+    left: 77px;
+    .text-white {
+      color: #274b75;
+    }
+  }
+}

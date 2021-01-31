@@ -1,0 +1,28 @@
+.well
+  .row
+    .col-xs-12.col-sm-6      
+      %h5
+        %b= food_type.food_group.name + ":"
+        %br/
+        = link_to food_type.name, food_type, remote: true
+        %small= "(" + food_type.kcal.round(2).to_s + " kcal)"
+      %b Proteinas:
+      =food_type.proteins.round(2)
+      %small gr
+      %br/
+      %b Grasas:
+      =food_type.fats.round(2)
+      %small gr
+      %br/
+      %b Carbos:
+      =food_type.carbs.round(2)
+      %small gr
+    .col-xs-12.col-sm-6
+      = form_for estimate_food, remote: true do |f|
+        = f.select(:meal_id, current_user.meals.all.collect {|a| [a.name, a.id]}, {}, {class: "form-control", :style => "margin-top: 15px;"})
+        .input-group
+          = f.number_field :quantity, value: 1, class: "form-control", min: 0.1, step: 0.01
+          .input-group-btn
+            = f.hidden_field :estimate_id, value: @estimate.id
+            = f.hidden_field :food_type_id, value: food_type.id
+            = f.submit "+", class: "btn btn-primary"

@@ -1,0 +1,21 @@
+.text-right
+  = link_to "Usuarios", users_path, :class => "btn btn-success"
+%br/
+.row
+  .well.col-sm-6.col-sm-offset-3
+    %table.table
+      %thead
+        %tr
+          %th Grupo
+      %tbody
+        - @food_groups.each do |food_group|
+          %tr
+            %td
+              = link_to food_group do
+                = food_group.name
+                = '(' + food_group.food_types.count.to_s + ')'
+            -if current_user.admin?
+              %td= link_to 'Editar', edit_food_group_path(food_group), :class => 'btn btn-warning'
+              %td= link_to '×', food_group, method: :delete, data: { confirm: '¿Estas seguro que deseas eliminar este grupo de alimentos?' }, :class => 'btn btn-danger btn-xs'
+    .text-right
+      = link_to 'Nuevo grupo', new_food_group_path, class: "btn btn-success"

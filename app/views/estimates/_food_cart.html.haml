@@ -1,0 +1,12 @@
+- if params[:estimate_food]
+  -@estimate_foods = Estimate.find(params[:estimate_food][:estimate_id]).estimate_foods
+-else
+  -@estimate_foods = @estimate.estimate_foods
+- if @estimate_foods.size == 0
+  %p.text-center
+    No tienes alimentos agregados a tu plan, por favor selecciona los intercambios que deseas en la lista de la izquierda.
+- else
+  - @estimate_foods.each do |estimate_food|
+    = render 'estimates/cart_row', food_type: estimate_food.food_type, estimate_food: estimate_food
+  .text-center
+    = link_to "Descargar PDF", estimate_download_path(@estimate, format: "pdf"), target: "_blank", class: 'btn btn-primary'

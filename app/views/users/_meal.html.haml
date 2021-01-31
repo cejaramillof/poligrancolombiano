@@ -1,0 +1,8 @@
+%tr
+  %td.col-xs-5.col-md-6.col-md-offset-2
+    = f.input :name, label: false, input_html: { class: 'form-control' }, placeholder: 'Comida #'
+  %td.col-xs-6.col-md-2
+    = f.input :hour, label: false, :as => :time, minute_step: 5, input_html: { class: 'form-control form-control-inline input-sm', style: 'margin-top: 15px;margin-bottom: 15px;'  }
+  %td.col-xs-1.col-md-1
+    = f.input_field :_destroy, as: :hidden
+    = link_to 'x', '#', data: { confirm: '¿Estas seguro que deseas eliminar esta comida?' }, class: 'remove_record btn btn-danger vcenter btn-sm', style: 'margin-top: 15px;'

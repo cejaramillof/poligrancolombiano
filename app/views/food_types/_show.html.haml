@@ -1,0 +1,46 @@
+#show-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4.modal-title
+          Alimento -
+          = @food_type.name
+          = '(' + @food_type.food_group.name + ')'
+      .modal-body.text-center
+        .alert.alert-info
+          %span
+            %b Kcal:
+            = @food_type.kcal.round(2)
+            %small Kcal
+          %span
+            %b Proteinas:
+            = @food_type.proteins.round(2)
+            %small gr
+          %span
+            %b Carbohidratos:
+            = @food_type.carbs.round(2)
+            %small gr
+          %span
+            %b Grasas:
+            = @food_type.fats.round(2)
+            %small gr
+        %table.table.table-striped.table-foods
+          %thead
+            %tr
+              %th Nombre
+              %th Cantidad (gr/ml)
+              %th Cantidad (casera)
+          %tbody
+            - @food_type.foods.each do |food|
+              %tr
+                %td= food.name
+                %td= food.quantity
+                %td= food.home_quantity
+                -if current_user.admin?
+                  %td= link_to '×', food, method: :delete, data: { confirm: '¿Estas seguro que deseas eliminar este alimento?' }, :remote => true, :class => 'delete_food btn btn-danger btn-xs'
+      .modal-footer
+        %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal", class: "btn btn-danger"} Cerrar
+        -if current_user.admin?
+          = link_to 'Nueva comida', new_food_path(:food => @food_type),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#food-modal', class: 'btn btn-success'}

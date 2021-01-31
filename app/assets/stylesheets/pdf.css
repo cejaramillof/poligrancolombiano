@@ -1,0 +1,32 @@
+.text-left {
+    text-align: left;
+}
+
+
+.text-right {
+    text-align: right;
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+.page {
+    page-break-before: always;
+    background-image:url(https://i.imgur.com/Cs2R9eq.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.new-page {
+    page-break-after: always;
+}
+
+thead { display: table-header-group }
+tfoot { display: table-row-group }
+tr { page-break-inside: avoid }
+
+.red-text {
+    color: red!important;
+}

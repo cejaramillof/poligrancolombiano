@@ -1,0 +1,48 @@
+.text-right
+  = link_to "Alimentos", food_groups_path, :class => "btn btn-success"
+%br/
+.well
+  %h4 Usuarios
+  .row.text-center
+    .col-sm-4
+      = link_to "Esperando aprobación", {:action => "index", :approved => "false"}, :class => "btn btn-danger"
+    %br/
+    .col-sm-4
+      = link_to "Aprobados", {:action => "index", :approved => "true"}, :class => "btn btn-success"
+    %br/
+    .col-sm-4
+      = link_to "Todos los usuarios", {:action => "index"}, :class => "btn btn-primary"
+  %br/
+  %br/
+  .table-responsive
+    %table.table.datatable
+      %thead
+        %tr
+          %th Nombre
+          %th Email
+          %th Altura
+          %th Cumpleaños
+          %th Creado
+          %th Editar
+          %th Aprobar
+      %tbody
+        - @users.each do |user|
+          %tr
+            %td= user.name
+            %td= user.email
+            %td= user.height
+            %td= user.birth_date
+            %td= user.created_at.strftime('%d/%m/%Y')
+            %td= link_to "Editar", edit_user_path(user)
+            %td
+              - if !user.approved?
+                = link_to "Aprobar", approve_user_path(user), method: :put
+:javascript
+  $(document).ready(function () {
+      $('.datatable').dataTable({
+        "bFilter": true,
+        "bSort": true,
+        "order": [[4, 'desc']]
+    });
+  });
+

@@ -1,0 +1,80 @@
+.container
+  .col-sm-4.col-sm-push-8.hidden-xs
+    =render 'layouts/profile'
+  .col-sm-8.col-sm-pull-4
+    .text-center
+      -if current_user.meals.count > 0
+        = link_to 'Crear Nuevo Cálculo', new_estimate_path, class: 'btn btn-success'
+      -else
+        .alert.alert-danger
+          Tienes que tener por lo menos una comida definida, para crear un plan. Por favor ve a editar tu perfil y creala.
+    %br
+    - @estimates.each do |estimate|
+      .jumbotron
+        .text-right
+          = link_to 'x', estimate, method: :delete, class: 'btn btn-danger', data: { confirm: '¿Estas seguro que deseas eliminar este plan?' }
+        %b Nivel de actividad:
+        %span= estimate.activity.titleize
+        %br/
+        %br/
+        .row
+          .col-sm-6
+            %b Kcal:
+            %ul
+              %li
+                %b Diarias:
+                %span= estimate.tdee.round(2)
+                %small kcal
+              %li
+                %b Variación:
+                %span= estimate.variation.round(2)
+                %small %
+              %li
+                %b Recomendadas:
+                %span= estimate.suggested.round(2)
+                %small kcal
+          .col-sm-6
+            %b Macronutrientes:
+            %ul
+              %li
+                %b Grasas:
+                %span= estimate.fats.round(2)
+                %small % -
+                %span= estimate.gr_fats.round(2)
+                %small g
+              %li
+                %b Proteínas:
+                %span= estimate.proteins.round(2)
+                %small % -
+                %span= estimate.gr_proteins.round(2)
+                %small g
+              %li
+                %b Carbohidratos:
+                %span= estimate.carbs.round(2)
+                %small % -
+                %span= estimate.gr_carbs.round(2)
+                %small g
+        .row
+          .col-sm-6.col-sm-push-6
+            %b Peso:
+            %ul
+              %li
+                %b Total:
+                %span= estimate.weight.round(2)
+                %small kg
+              %li
+                %b Magro:
+                %span= estimate.lean_weight.round(2)
+                %small kg
+              %li
+                %b Adiposo:
+                %span= estimate.body_fat.round(2)
+                %small % -
+                %span= estimate.fat_weight.round(2)
+                %small kg
+          .col-sm-6.col-sm-pull-6
+            %br/
+            = link_to 'Ver más', estimate, class: 'btn btn-info'
+            = link_to "Descargar PDF", estimate_download_path(estimate, format: "pdf"), target: "_blank", class: 'btn btn-primary'
+    .text-center
+      = will_paginate @estimates, :previous_label => 'Anterior', :next_label => 'Siguiente', renderer: BootstrapPagination::Rails

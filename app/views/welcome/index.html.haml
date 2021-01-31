@@ -1,0 +1,14 @@
+.container
+  .col-sm-4.col-sm-push-8.hidden-xs
+    =render 'layouts/profile'
+  .col-sm-8.col-sm-pull-4
+    .well
+      - FoodType.all.group_by(&:food_group).each do |food_type|
+        - food_type.each do |food_group|
+          -if food_group.class != Array
+            %b=food_group.name + ':'
+          -else
+            -food_group.each do |type|
+              %td= link_to type.name, type, remote: true, :class => 'btn btn-primary', style: 'margin-top: 3px;'
+          %br/
+        %br/

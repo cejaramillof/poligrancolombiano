@@ -1,0 +1,36 @@
+.row
+  .col-md-6.col-sm-6.col-xs-6.col-md-offset-4
+    #iosBlurBg
+      #whiteBg
+    #bottomEnter
+    #bottomBlurBg
+    / Login Form
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .loginForm
+        .title
+          %p
+            %span Poli
+            Grancolombiano
+            %br/
+
+          %hr/
+          %hr.short/
+        .col-3
+          = f.label :email, "Correo:"
+          %br/
+          = f.email_field :email, autofocus: true, class: "effect-2", placeholder: "you@email.com"
+          %span.focus-border
+          %br/
+          %br/
+          = f.label :password, "Contraseña:"
+          %br/
+          = f.password_field :password, autocomplete: "off", class: "effect-2", placeholder: "*******"
+          %span.focus-border
+        .forget
+          %button.btn.btn-default.btn-sm
+            =link_to '¡Registrate aquí!', new_user_registration_path, class: "btn-default"
+      = f.button :submit do
+        .enterButton
+          %i.fa.fa-lock.fa-2x.text-white
+          %br/
+          %span.enterText.text-white Entrar

@@ -1,0 +1,13 @@
+.cart-text
+  = render 'layouts/cart_text', estimate: @estimate
+.row
+  .col-xs-6
+    %h4
+      %b Lista de intercambios:
+    - @food_types.each do |food_type|
+      = render 'foods/food_row', food_type: food_type, estimate_food: @estimate_food
+  .col-xs-6
+    %h4
+      %b Tus alimentos seleccionados:
+    .food-cart
+      = render 'estimates/food_cart', estimate: @estimate

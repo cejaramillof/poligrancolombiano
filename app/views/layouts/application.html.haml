@@ -1,0 +1,34 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title PoliGrancolombiano
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}/
+  %body{style: "overflow-x: hidden;"}
+    - unless flash.empty?
+      - flash.each do |f|
+        - type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info')
+        = javascript_tag do
+          toastr["#{type}"]("#{f[1]}")
+    -if current_user
+      .navbar.navbar-default.navbar-static-top
+        .container-fluid
+          %ul.nav.navbar-nav
+            %li
+              =link_to "Cálculos", estimates_path
+            %li
+              = link_to "Alimentos", welcome_index_path
+            %li.hidden-sm.hidden-md.hidden-lg
+              = link_to "Perfil", welcome_perfil_path
+            %li
+              = link_to "Cerrar Sesión", destroy_user_session_path, method: :delete
+    .container
+      = yield
+    %navbar.navbar-static-bottom
+      .text-center
+        Created by
+        =link_to "cjotaf", 'https://www.instagram.com/cjotaf/', target: "_blank"
+    .footer{style:"height: 50px;"}

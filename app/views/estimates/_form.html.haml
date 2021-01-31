@@ -1,0 +1,85 @@
+.jumbotron
+  = form_for @estimate do |f|
+    - if @estimate.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@estimate.errors.count, "error")} prohibió que fuera creado:"
+        %ul
+          - @estimate.errors.full_messages.each do |message|
+            %li= message
+    .row
+      .col-sm-6
+        %br/
+        = f.label :weight, "Peso:"
+        %small en KG
+        = f.number_field :weight, :required => true, class: "form-control", placeholder: "80", min: "0", step:"0.01"
+      .col-sm-6
+        %br/
+        = f.label :body_fat,"Porcentaje graso:"
+        %small (opcional)
+        = f.number_field :body_fat, class: "form-control", placeholder: "15", min: "0", step:"0.01"
+    .row
+      .col-xs-12
+        %br/
+        %label Objetivo:
+        .text-center
+          .radio-inline
+            %label
+              %input{type: "radio", name: "r1", onClick: "document.getElementById('estimate_carbs').value=25;document.getElementById('estimate_fats').value=30;document.getElementById('estimate_proteins').value=45;document.getElementById('estimate_variation').value=-20"} Definición
+          .radio-inline
+            %label
+              %input{type: "radio", name: "r1", onClick: "document.getElementById('estimate_carbs').value=40;document.getElementById('estimate_fats').value=35;document.getElementById('estimate_proteins').value=25;document.getElementById('estimate_variation').value=0"} Mantanimiento
+          .radio-inline
+            %label
+              %input{type: "radio", name: "r1", onClick: "document.getElementById('estimate_carbs').value=45;document.getElementById('estimate_fats').value=30;document.getElementById('estimate_proteins').value=25;document.getElementById('estimate_variation').value=20"} Volumen
+    .row
+      .col-sm-6
+        %br/
+        = f.label :variation, "Variacion kcal:"
+        %small %
+        = f.number_field :variation, :required => true, class: "form-control", step:"0.01"
+        %br/
+        = f.label :activity, "Nivel de actividad:"
+        = f.select(:activity, Estimate.activities.keys, {}, {:class => "form-control", :style => "margin-top: 15px;"})
+        %br/
+        .alert.alert-info
+          %small#activity
+            Actividades típicas de la vida diaria. (por ejemplo, tareas de la casa, caminar hasta el autobús)
+      .col-sm-6
+        .col-sm-12
+          %br/
+          = f.label :fats, "Grasas:"
+          %small %
+          = f.number_field :fats, :required => true, class: "form-control", min: "0", step:"0.01", placeholder: "% de grasas"
+        .col-sm-12
+          %br/
+          = f.label :carbs, "Carbohidratos:"
+          %small %
+          = f.number_field :carbs, :required => true, class: "form-control", min: "0", step:"0.01", placeholder: "% de carbohidratos"
+        .col-sm-12
+          %br/
+          = f.label :proteins, "Proteinas:"
+          %small %
+          = f.number_field :proteins, :required => true, class: "form-control", min: "0", step:"0.01", placeholder: "% de proteinas"
+    .actions.text-right
+      = link_to 'Cancelar', estimates_path, class: "btn btn-danger", style: "margin-top: 15px;"
+      = f.submit 'Crear', class: "btn btn-success"
+:javascript
+  $('#estimate_activity').on('change', function() {
+     switch(this.value) {
+      case "sedentaria":
+        $('#activity').text('Actividades típicas de la vida diaria. (por ejemplo, tareas de la casa, caminar hasta el autobús)');
+        break;
+      case "baja":
+        $('#activity').text('Actividades típicas de la vida diaria. Más 30-60 minutos de actividad moderada diaria. (por ejemplo, caminar a 5-7 km/h).');
+        break;
+      case "activa":
+        $('#activity').text('Actividades típicas de la vida diaria. Más por lo menos 60 minutos de actividad moderada diaria.');
+        break;
+      case "alta":
+        $('#activity').text('Actividades típicas de la vida diaria. Más por lo menos 60 minutos de actividad moderada diaria. Más un adicional de 60 minutos de actividad vigorosa o 120 minutos de actividad moderada.');
+        break;
+      default:
+        $('#activity').text('Actividades típicas de la vida diaria. (por ejemplo, tareas de la casa, caminar hasta el autobús)');
+    }
+  });
+

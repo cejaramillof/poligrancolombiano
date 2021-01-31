@@ -1,0 +1,84 @@
+.row
+  .well
+    .panel-body
+      .text-center
+        %h3
+          %b= current_user.name.titleize
+        %small.text-right= "( " +current_user.email + " )"
+        %br/
+        %small= link_to "Editar Usuario", edit_user_registration_path
+        - if current_user.admin?
+          \|
+          %small= link_to "Admin", users_path(:approved => "false")
+      %br/
+      .col-xs-9.vcenter
+        %ul.no-margin-bottom
+          %li
+            %b Estatura:
+            %span= current_user.height
+            %small m
+          %li
+            %b Edad:
+            %span= current_user.age
+            %small años
+          %li
+            %b Comidas:
+            %span= current_user.meals.count
+            %small x día
+      .col-xs-1.vcenter
+        - if current_user.male?
+          %i.fa.fa-male.fa-2x{:"aria-hidden" => "true"}
+        -else
+          %i.fa.fa-female.fa-2x{:"aria-hidden" => "true"}
+      %br/
+      %br/
+    -@estimate = current_user.estimates.last
+    -if @estimate
+      - color = ""
+      -if current_user.male?
+        -if @estimate.body_fat >= 25
+          -color = "danger"
+        -elsif @estimate.body_fat >= 21
+          -color = "warning"
+        -elsif @estimate.body_fat >= 12
+          -color = "info"
+        -else
+          -color = "success"
+      -else
+        -if @estimate.body_fat >= 33
+          -color = "danger"
+        -elsif @estimate.body_fat >= 31
+          -color = "warning"
+        -elsif @estimate.body_fat >= 24
+          -color = "info"
+        -else
+          -color = "success"
+      .alert{:class => "alert-#{color}"}
+        .container
+          %h4
+            %b Peso:
+          %ul
+            %li
+              %b Total:
+              %span= @estimate.weight.round(2)
+              %small kg
+            %li
+              %b Magro:
+              %span= @estimate.lean_weight.round(2)
+              %small kg
+            %li
+              %b Adiposo:
+              %span
+                = @estimate.fat_weight.round(2)
+                %small kg -
+                = @estimate.body_fat.round(2)
+                %small %
+      %br
+-if @estimate
+  .well.well-lg
+    %b Tu peso en el tiempo:
+    %br/
+    %br/
+    = line_chart current_user.estimates.group(:created_at).average(:weight)
+=link_to 'https://poligrancolombiano.herokuapp.com/', target: "_blank" do
+  =image_tag('logo.png', class: 'img-responsive center-block hidden-xs')

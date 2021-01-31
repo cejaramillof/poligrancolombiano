@@ -1,0 +1,60 @@
+.alert.alert-info
+  %table.table.borderless
+    %thead
+      %th
+
+      %th
+        KCAL (kcal)
+      %th
+        Protes (gr)
+      %th
+        Carbos (gr)
+      %th
+        Grasas (gr)
+    %tbody
+      %tr
+        %th
+          Requeridas
+        %td
+          =@estimate.suggested.round(2)
+        %td
+          =@estimate.gr_proteins.round(2)
+        %td
+          =@estimate.gr_carbs.round(2)
+        %td
+          =@estimate.gr_fats.round(2)
+      %tr
+        %th
+          = @estimate.estimate_foods.size.to_s + " Alimento(s)"
+        %td
+          =@estimate.total_kcal.round(2)
+        %td
+          =@estimate.total_proteins.round(2)
+        %td
+          =@estimate.total_carbs.round(2)
+        %td
+          =@estimate.total_fats.round(2)
+  - @r_kcal = @estimate.suggested - @estimate.total_kcal
+  - @r_prote = @estimate.gr_proteins - @estimate.total_proteins
+  - @r_carbs = @estimate.gr_carbs - @estimate.total_carbs
+  - @r_fats = @estimate.gr_fats - @estimate.total_fats
+  - color = ""
+  - if @r_kcal < -20 || @r_prote < -5  || @r_carbs < -5  || @r_fats < -5
+    - color = "danger"
+  - elsif @r_kcal < 20 && @r_prote < 5  && @r_carbs < 5  && @r_fats < 5
+    - color = "success"
+  -else
+    - color = "info"
+  .alert.navbar-fixed-bottom.text-center{:class => "alert-#{color}", style: "margin-bottom: 0;"}
+    %b Restantes:
+    = @r_kcal.round(2)
+    %small kcal
+    %span - Proteinas:
+    = @r_prote.round(2)
+    %small gr
+    %span - Carbos:
+    = @r_carbs.round(2)
+    %small gr
+    %span - Grasas:
+    = @r_fats.round(2)
+    %small gr

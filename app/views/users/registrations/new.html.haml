@@ -1,0 +1,93 @@
+%br/
+%br/
+.container
+  .row
+    .col-sm-8.col-sm-offset-2
+      .panel.panel-default
+        .panel-heading
+          %panel-title ¡Registrate!
+        .panel-body
+          .col-sm-10.col-sm-offset-1
+            %p
+              Completa todos los campos para registrarte. Posteriormente, un administrador deberá aprobar tu cuenta.
+              %small Nos reservamos el derecho de admisión.
+            %br/
+            = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+              = devise_error_messages!
+              .row
+                .col-sm-6
+                  = f.label :name, "Nombre:"
+                  %br/
+                  = f.text_field :name, autofocus: true, class: "form-control", placeholder: "Arnold Schwarzenegger", required: true
+                  %br/
+                .col-sm-6
+                  = f.label :sex, "Genero:"
+                  %br/
+                  %br/
+                  .col-xs-6
+                    = f.radio_button :sex, "male", checked: true
+                    = f.label :sex, "Hombre", :value => "male", class: "radio-inline" do
+                      %i.fa.fa-male.fa-2x{:"aria-hidden" => "true"}
+                  .col-xs-6
+                    = f.radio_button :sex, "female"
+                    = f.label :sex, "Mujer", :value => "female", class: "radio-inline" do
+                      %i.fa.fa-female.fa-2x{:"aria-hidden" => "true"}
+                  %br/
+                  %br/
+              .row
+                .col-sm-6
+                  = f.label :height, "Altura (talla):"
+                  %em
+                    (en metros)
+                  %br/
+                  = f.number_field :height, class: "form-control", min: "0", max: "3", step:"0.01", placeholder: "1.75", required: true
+                  %br/
+                .col-sm-6
+                  = f.label :birth_date, "Fecha de Nacimiento: "
+                  %br/
+                  = f.text_field :birth_date, class: "form-control", required: true, 'data-provide': 'datepicker', readonly: "true",  'data-date-format': 'dd/mm/yyyy'
+                  %br/
+              .row
+                .col-sm-12
+                  = f.label :email, "Correo:"
+                  %br/
+                  = f.email_field :email, class: "form-control", placeholder: "you@email.com", required: true
+                  %br/
+              .row
+                .col-sm-6
+                  = f.label :password, "Contraseña:"
+                  - if @minimum_password_length
+                    %em
+                      (#{@minimum_password_length} caracteres mínimo)
+                  %br/
+                  = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "*********"
+                  %br
+                .col-sm-6
+                  = f.label :password_confirmation, "Confirmar contraseña:"
+                  %br/
+                  = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "*********"
+              .row
+                %br/
+                %br/
+                %label
+                  Comidas del día (con horario):
+                %small Ej: Desayuno, Media Mañana, Almuerzo, Post-Entreno, Cena.
+                %table.table
+                  %thead
+                    %tr
+                      %th Nombre
+                      %th Hora
+                      %th
+                  %tbody.fields
+                    = f.simple_fields_for :meals do |builder|
+                      = render 'meal', f: builder
+              .text-left
+                = link_to_add_row('Agregar Comida', f, :meals, class: 'btn btn-primary')
+              .actions.text-center
+                %br/
+                = link_to "Cancelar", new_user_session_path, class: "btn btn-danger", style: "margin-top: 15px;"
+                = f.submit "Registrar", class: "btn btn-success"
+              %br/
+%br/
+%br/
+%br/

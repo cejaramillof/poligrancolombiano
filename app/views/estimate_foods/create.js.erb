@@ -1,0 +1,6 @@
+<% if @estimate.errors.any? || @estimate_food.errors.any? %>
+alert("not valid.")
+<% else %>
+$(".cart-text").html("<%= escape_javascript(render 'layouts/cart_text', estimate: @estimate) %>")
+$(".food-cart").html("<%= escape_javascript(render 'estimates/food_cart', estimate: @estimate) %>")
+<% end %>

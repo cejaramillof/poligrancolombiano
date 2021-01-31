@@ -1,0 +1,9 @@
+<% if @food.errors.empty? %>
+// add the row to the table, show alert and hide modal
+$('.food-modal').modal('hide');
+$('.table-foods tbody').append(' <%= j render "row", product: @food %>');
+$('.alert-success').html("La comida ha sido creada con éxito").show();
+<% else %>
+// show first error
+alert('<%= @food.errors.full_messages[0] %>');
+<% end %>

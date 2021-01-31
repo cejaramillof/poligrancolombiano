@@ -1,0 +1,13 @@
+= form_for @food_group do |f|
+  - if @food_group.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@food_group.errors.count, "error")} prohibited this food_group from being saved:"
+      %ul
+        - @food_group.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :name, "Nombre"
+    = f.text_field :name, class: "form-control"
+  .actions.text-right
+    = f.submit 'Guardar', class: "btn btn-success"
